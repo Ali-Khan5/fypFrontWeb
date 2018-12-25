@@ -1,0 +1,90 @@
+.special .jumbotron {
+  height: 100%;
+}
+.floatingButton {
+  width: 100px;
+  height: 100px;
+  box-sizing: border-box;
+
+  border-radius: 50%;
+  overflow: hidden;
+  box-shadow: 0 5px 15px 0px rgba(0, 0, 0, 0.6);
+  transform: translatey(0px) !important;
+  animation: float 6s ease-in-out infinite;
+  width: 100%;
+  height: auto;
+}
+.containerFloat {
+  align-items: center;
+  background-color: #f9f9f9;
+  display: flex;
+  height: 100%;
+  justify-content: center;
+  max-width: 100%;
+  min-height: 100vh;
+  position: relative;
+}
+
+/* // Variables */
+/* $btn-color: #0dd;
+$shadow-color: #c7c7c7; */
+
+/* // Button */
+.buttonfloat {
+  /* background-color: #0dd; */
+  border: none;
+  transition: background-color 0.5s linear, color 0.5s linear;
+}
+
+.buttonfloat:hover {
+  background-color: darken(#0dd, 5%);
+}
+.buttonfloat:focus {
+  outline: none;
+}
+
+.add-to-cart {
+  animation: shadowFloat 1.2s linear alternate infinite;
+  border-radius: 100px;
+  color: #fff;
+  font-size: 13px;
+  padding: 0px 0px;
+  text-transform: uppercase;
+  text-shadow: 0 1px 1px darken(#0dd, 10%);
+}
+.SvgCenter {
+  height: 250px;
+  width: 400px;
+  /* padding:30px; */
+}
+.AboutUsDescription {
+  color: white;
+  text-align: center;
+  margin-top: 10px;
+  margin-left: 70px;
+  margin-right: 70px;
+}
+/* // Animations */
+@keyframes shadowFloat {
+  0% {
+    box-shadow: 0 20px 40px #c7c7c7;
+    transform: translateY(-3px);
+  }
+  100% {
+    box-shadow: 0 10px 10px darken(#c7c7c7, 5%);
+    transform: translateY(3px);
+  }
+}
+@media (max-width: 755px) {
+  .SvgCenter {
+  
+    height: 150px;
+    width: 100%;
+  }
+  .AboutUsDescription{
+    margin-top: 15px;
+  margin-left: 0px;
+  margin-right: 0px;
+  font-size: 1.2rem;
+  }
+}
