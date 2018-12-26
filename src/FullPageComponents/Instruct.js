@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import TypeIt from "typeit";
-
+import SignIn from "./../Components/SignInModel";
 class Insturction extends Component {
   constructor(props) {
     super(props);
@@ -154,17 +154,20 @@ class Insturction extends Component {
                     </p> */}
                     <div className=" text-center">
                       <p
-                        className="  btn btn-info btn-lg "
+                        className="  btn btn-info btn-lg " 
                         //   onClick={this.displayNext}
+                        data-toggle="modal" data-target="#exampleModalCenter"
                       >
                         Get Started{" "}
                       </p>
+                      <SignIn/>
                     </div>
                   </div>
                 ) : null}
               </div>
             </div>
           </div>
+          
         </div>
       </div>
     );
