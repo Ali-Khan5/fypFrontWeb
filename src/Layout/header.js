@@ -8,22 +8,22 @@ class Header extends Component {
   render() {
     return (
         // <!--Main Navigation-->
-        <nav class="navbar navbar-expand-lg ">
-        <a class="navbar-brand" href="#"> <img  height={140} width={140} src={Logo}/></a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNavDropdown">
-          <ul class="navbar-nav">
-            <li class="nav-item active">
-              <Link class="nav-link" to="/">Home <span class="sr-only">(current)</span></Link>
+        <nav className="navbar navbar-expand-lg ">
+        <a className="navbar-brand" href="#"> <img  height={140} width={140} src={Logo}/></a>
+        <button className="navbar-toggler ml-auto" type="button" data-toggle="collapse" data-target="#collapsingNavbar3">
+        <span className="navbar-toggler-icon"></span>
+         </button>
+        <div className="collapse navbar-collapse" id="navbarNavDropdown">
+          <ul className="navbar-nav">
+            <li className="nav-item active">
+              <Link className="nav-link" to="/">Home <span className="sr-only">(current)</span></Link>
             </li>
-            <li class="nav-item">
+            <li className="nav-item">
 
-              <Link class="nav-link" to="/instruct">Instructions</Link>
+              <Link className="nav-link" to="/instruct">Instructions</Link>
             </li>
-            <li class="nav-item">
-              <Link class="nav-link"  to="#" data-toggle="modal" data-target="#exampleModalCenter" >Get Started </Link>
+            <li className="nav-item">
+              <Link className="nav-link"  to="#" data-toggle="modal" data-target="#exampleModalCenter" >Get Started </Link>
             </li>
             {/* <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

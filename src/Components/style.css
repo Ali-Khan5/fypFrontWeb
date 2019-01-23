@@ -1,14 +1,16 @@
 .typeWritingClass{
-    border:2px solid black;
+    border:5px solid rgb(221, 16, 16);
     border-radius: 40px;
     font-size: 55px;
     padding: 20px;
+    color:#ffffff;
+    font-weight: bold;
   }
   .homeHeading2{
     margin-top: 70px;
   }
   .homeArrow{
-      font-size: 60px; color: red ;
+      font-size: 60px; color: #ffffff;
   }
  
   .faqQuestionsStyle{

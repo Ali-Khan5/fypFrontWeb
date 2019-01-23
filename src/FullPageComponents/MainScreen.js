@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 // import "./App.css";
 // import List from "./components/List";
-
+import FbDataShow from "./../Components/fbDataShow";
 class HomePage extends Component {
   constructor(props) {
     super(props);
@@ -13,7 +13,8 @@ class HomePage extends Component {
       email: "",
       displayCounter: 0,
       data: "",
-      errorMessage: ""
+      errorMessage: "",
+      loading:false
     };
   }
 
@@ -21,6 +22,7 @@ class HomePage extends Component {
     console.log("geting request....");
     const response = await fetch("/fiind/" + this.state.FullName);
     const body = await response.json();
+    console.log(body);
     if (response.status !== 200) throw Error(body.message);
     return body;
   };
@@ -34,9 +36,10 @@ class HomePage extends Component {
     count++;
     this.setState({ displayCounter: count });
     if (this.state.displayCounter == 4) {
+      this.setState({loading:true})
       console.log("am i running??");
       this.getPerson()
-        .then(res => this.setState({ data: res }))
+        .then(res => this.setState({ data: res,loading:false }))
         .catch(err => {
           // console.log(err);
           this.setState({ errorMessage: err });
@@ -63,19 +66,37 @@ class HomePage extends Component {
     return (
       <div className="container" style={middleStyle}>
         {/* <h2 class="card-text">Lets start Searching </h2> */}
-        <div class="card border-danger mb-3" style={{ maxWidth: "28rem" }}>
-          <div class="card-body text-danger">
-            <h3 class="card-text">Lets start Searching </h3>
+
+        {!this.state.loading ? (
+          <div>
+            <div
+              className="card border-danger mb-3"
+              style={{ maxWidth: "28rem" }}
+            >
+              <div className="card-body text-danger">
+                <h3 className="card-text">Lets start Searching </h3>
+              </div>
+            </div>
+            <p>
+              We will need all the information that we can get to search them as
+              accurately as possible{" "}
+            </p>
           </div>
+        ) : 
+        <div
+        className="card border-danger mb-3"
+        style={{ maxWidth: "28rem" }}
+      >
+        <div className="card-body text-danger">
+          <h3 className="card-text">Processing your request.... </h3>
         </div>
-        <p>
-          We will need all the information that we can get to search them as
-          accurately as possible{" "}
-        </p>
+      </div>
+        
+        }
         {this.state.displayCounter == 0 ? (
-          <div class="card border-primary mb-3 mb-3">
-            <div class="card-body">
-              <div class="form-group card-text">
+          <div className="card border-primary mb-3 mb-3">
+            <div className="card-body">
+              <div className="form-group card-text">
                 <label htmlFor="exampleInputEmail1">Full Name</label>
                 <input
                   type="text"
@@ -86,7 +107,7 @@ class HomePage extends Component {
                   onChange={this.handleChange}
                   value={this.state.FullName}
                   name="FullName"
-                  style={{padding:'20px',fontSize:'20px'}}
+                  style={{ padding: "20px", fontSize: "20px" }}
                 />
                 <small id="emailHelp" className="form-text text-muted">
                   We'll never share your email with anyone else.
@@ -152,29 +173,39 @@ class HomePage extends Component {
         <button className="btn btn-primary btn-lg" onClick={this.displayNext}>
           Next
         </button>
-        {this.state.data ? (
-          // console.log(this.state.data)
-          // this.state.data.map((x,i)=>{
-          //   console.log(x.TITLE);
-          //   return(<List
-          //     FULLNAME={x.TITLE}
-          //     BIO={x.Description}
-          //     DP={""
-          //     }
-          //     screenName={x.link}
-          //   />)
-          // })
-          //  this.state.data['Fullname'].map((x,i)=>{
+        <br />
+        <br />
+        <div className="row">
+          {this.state.data
+            ? this.state.data.fb.map((x, i) => {
+                // console.log(x.picture);
+                return (
+                  //   FULLNAME={x.TITLE}
+                  //   BIO={x.Description}
+                  //   DP={""
+                  //   }
+                  //   screenName={x.link}
+                  <div className="col-md-4 " key={i}>
+                    <FbDataShow
+                      name={x.TITLE}
+                      description={x.details}
+                      imgg={x.picture}
+                      username={x.link}
+                    />
+                  </div>
+                );
+              })
+            : //  this.state.data['Fullname'].map((x,i)=>{
 
-          //    <List
-          //      FULLNAME={this.state.data.Fullname[i]}
-          //      BIO={this.state.data.Bios[i]}
-          //      DP={this.state.data.DisplayPictures[i]}
-          //    />
-          //  })
-          //
+              //    <List
+              //      FULLNAME={this.state.data.Fullname[i]}
+              //      BIO={this.state.data.Bios[i]}
+              //      DP={this.state.data.DisplayPictures[i]}
+              //    />
+              //  })
+              //
 
-          /* <List
+              /* <List
             FULLNAME={this.state.data.Fullname[0]}
             BIO={this.state.data.Bios[0]}
             DP={this.state.data.DisplayPictures[0]
@@ -194,8 +225,30 @@ class HomePage extends Component {
         DP={this.state.data.DisplayPictures[2]}
       /> */
 
-          <div />
-        ) : null}
+              null}
+        </div>
+        <div className="row">
+          {this.state.data
+            ? this.state.data.tweet.map((x, i) => {
+                //  console.log(x);
+                return (
+                  //   FULLNAME={x.TITLE}
+                  //   BIO={x.Description}
+                  //   DP={""
+                  //   }
+                  //   screenName={x.link}
+                  <div className="col-md-4 " key={i}>
+                    <FbDataShow
+                      name={x.Fullname}
+                      description={x.Bios}
+                      imgg={x.DisplayPictures}
+                      username={x.screenName}
+                    />
+                  </div>
+                );
+              })
+            : null}
+        </div>
       </div>
     );
   }

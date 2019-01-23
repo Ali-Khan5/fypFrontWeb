@@ -64,6 +64,19 @@ $shadow-color: #c7c7c7; */
   margin-left: 70px;
   margin-right: 70px;
 }
+.bgImg{
+  
+  background: url('./../homebk.png');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
+}
+.forground{
+  /* background-color:hsla(360, 100%, 22%, 0.66); */
+  background-color:hsla(0, 56%, 37%, 0.83);
+  
+}
 /* // Animations */
 @keyframes shadowFloat {
   0% {

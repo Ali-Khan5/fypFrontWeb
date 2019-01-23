@@ -6,7 +6,7 @@ const SignInModel = props => {
     <div
       className="modal fade"
       id="exampleModalCenter"
-      tabindex="-1"
+      tabIndex="-1"
       role="dialog"
       aria-labelledby="exampleModalCenterTitle"
       aria-hidden="true"
@@ -27,11 +27,11 @@ const SignInModel = props => {
             </button>
           </div>
           <div className="modal-body">
-            <div class="form-group">
-              <label for="exampleFormControlInput1">Email address</label>
+            <div className="form-group">
+              <label htmlFor="exampleFormControlInput1">Email address</label>
               <input
                 type="email"
-                class="form-control"
+                className="form-control"
                 id="exampleFormControlInput1"
                 placeholder="Your email Adress"
               />
