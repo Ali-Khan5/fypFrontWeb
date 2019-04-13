@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 
-const fbDataShow = props => {
+const InstaDataShow = props => {
   return (
-    <div className="card border-primary " style={{ marginTop: "10px",height:'150px' }}>
+    <div className="card text-white bg-dark  " style={{ marginTop: "10px",height:'200px' }}>
       <div className="card-body">
         <div className="row">
           <div className=" col-md-4">
@@ -35,15 +35,12 @@ const fbDataShow = props => {
           </div>
           <div className=" col-md-8">
             <h5 className="card-title">{props.name}</h5>
-            <p style={{ fontSize: "12px" }}>
-            {props.username ? props.username :null}
+            <p style={{ fontSize: "14px",fontWeight:'bold' }}>
+            {props.Username ? props.Username :null}
             </p>
             <p style={{ fontSize: "12px" }}>
 
-              {props.description.split("").length > 50
-                ? props.description
-                // .substr(0,80) + "..."
-                : props.description}
+              { props.Followers ? props.Followers :null }
 
             </p>
           </div>
@@ -53,4 +50,4 @@ const fbDataShow = props => {
   );
 };
 
-export default fbDataShow;
+export default InstaDataShow;

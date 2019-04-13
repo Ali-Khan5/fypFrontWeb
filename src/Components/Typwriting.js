@@ -10,7 +10,7 @@ class TypeWriting extends Component {
         "For your former co-worker",
         "For your Long forgotten friend.",
         "For your child's friend",
-        "for your potential employee",
+        "For your potential employee",
         "Looking for that special person"
       ],
       speed: 100,

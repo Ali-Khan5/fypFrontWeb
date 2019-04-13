@@ -2,6 +2,8 @@ import React, { Component } from "react";
 // import "./App.css";
 // import List from "./components/List";
 import FbDataShow from "./../Components/fbDataShow";
+import TweeterDataShow from "./../Components/twitterDataShow";
+import InstagramDataShow from "./../Components/InstaDataShow";
 class HomePage extends Component {
   constructor(props) {
     super(props);
@@ -14,13 +16,15 @@ class HomePage extends Component {
       displayCounter: 0,
       data: "",
       errorMessage: "",
-      loading:false
+      loading: false
     };
   }
 
   getPerson = async () => {
     console.log("geting request....");
-    const response = await fetch("/fiind/" + this.state.FullName);
+    const response = await fetch(
+      `/fiind/${this.state.FullName}&${this.state.organisation}`
+    );
     const body = await response.json();
     console.log(body);
     if (response.status !== 200) throw Error(body.message);
@@ -35,31 +39,20 @@ class HomePage extends Component {
     let count = this.state.displayCounter;
     count++;
     this.setState({ displayCounter: count });
-    if (this.state.displayCounter == 4) {
-      this.setState({loading:true})
+    if (count === 4) {
+      this.setState({ loading: true });
       console.log("am i running??");
       this.getPerson()
-        .then(res => this.setState({ data: res,loading:false }))
+        .then(res => this.setState({ data: res, loading: false }))
         .catch(err => {
           // console.log(err);
           this.setState({ errorMessage: err });
         });
     }
   };
-  // dispayingData=()=>{
-  //   console.log('aaaaaaaaaaaaa')
-  //   let item="";
-
-  //   for(let i=0;i<this.state.data.Fullname.length;i++){
-  //     <List
-  //                FULLNAME={this.state.data.Fullname[i]}
-  //                BIO={this.state.data.Bios[i]}
-  //                DP={this.state.data.DisplayPictures[i]}
-  //              />
-
-  //   }
-
-  // }
+  SearchAgain = () => {
+    this.setState({ displayCounter: 0, data: "" });
+  };
   render() {
     const middleStyle = { marginTop: "5%" };
 
@@ -69,30 +62,51 @@ class HomePage extends Component {
 
         {!this.state.loading ? (
           <div>
-            <div
-              className="card border-danger mb-3"
-              style={{ maxWidth: "28rem" }}
-            >
-              <div className="card-body text-danger">
-                <h3 className="card-text">Lets start Searching </h3>
+            {this.state.data ? (
+              <div>
+                <div
+                  className="card border-info "
+                  style={{ maxWidth: "25rem" }}
+                >
+                  <div className="card-body text-info">
+                    <h3> want to search again ? </h3>
+                  </div>
+                </div>
+                <button
+                  className="btn btn-warning btn-lg"
+                  onClick={this.SearchAgain}
+                  style={{ marginTop: "10px" }}
+                >
+                  Search Again!
+                </button>
               </div>
-            </div>
-            <p>
-              We will need all the information that we can get to search them as
-              accurately as possible{" "}
-            </p>
+            ) : (
+              <div>
+                <div
+                  className="card border-danger mb-3"
+                  style={{ maxWidth: "28rem" }}
+                >
+                  <div className="card-body text-danger">
+                    <h3 className="card-text">Lets start Searching </h3>
+                  </div>
+                </div>
+                <p>
+                  We will need all the information that we can get to search
+                  them as accurately as possible{" "}
+                </p>
+              </div>
+            )}
           </div>
-        ) : 
-        <div
-        className="card border-danger mb-3"
-        style={{ maxWidth: "28rem" }}
-      >
-        <div className="card-body text-danger">
-          <h3 className="card-text">Processing your request.... </h3>
-        </div>
-      </div>
-        
-        }
+        ) : (
+          <div
+            className="card border-danger mb-3"
+            style={{ maxWidth: "28rem" }}
+          >
+            <div className="card-body text-danger">
+              <h3 className="card-text">Processing your request.... </h3>
+            </div>
+          </div>
+        )}
         {this.state.displayCounter == 0 ? (
           <div className="card border-primary mb-3 mb-3">
             <div className="card-body">
@@ -170,21 +184,19 @@ class HomePage extends Component {
             </small>
           </div>
         ) : null}
-        <button className="btn btn-primary btn-lg" onClick={this.displayNext}>
-          Next
-        </button>
+        {this.state.loading || this.state.data ? null : (
+          <button className="btn btn-primary btn-lg" onClick={this.displayNext}>
+            Next
+          </button>
+        )}
+
         <br />
         <br />
         <div className="row">
-          {this.state.data
+          {this.state.data.fb
             ? this.state.data.fb.map((x, i) => {
                 // console.log(x.picture);
                 return (
-                  //   FULLNAME={x.TITLE}
-                  //   BIO={x.Description}
-                  //   DP={""
-                  //   }
-                  //   screenName={x.link}
                   <div className="col-md-4 " key={i}>
                     <FbDataShow
                       name={x.TITLE}
@@ -195,54 +207,87 @@ class HomePage extends Component {
                   </div>
                 );
               })
-            : //  this.state.data['Fullname'].map((x,i)=>{
-
-              //    <List
-              //      FULLNAME={this.state.data.Fullname[i]}
-              //      BIO={this.state.data.Bios[i]}
-              //      DP={this.state.data.DisplayPictures[i]}
-              //    />
-              //  })
-              //
-
-              /* <List
-            FULLNAME={this.state.data.Fullname[0]}
-            BIO={this.state.data.Bios[0]}
-            DP={this.state.data.DisplayPictures[0]
-            }
-            screenName={this.state.data.screenName[0]}
-          />
-          <List
-          FULLNAME={this.state.data.Fullname[1]}
-          BIO={this.state.data.Bios[1]}
-          DP={this.state.data.DisplayPictures[1]}
-          screenName={this.state.data.screenName[1]}
-        />
-        <List
-        FULLNAME={this.state.data.Fullname[2]}
-        BIO={this.state.data.Bios[2]}
-        screenName={this.state.data.screenName[2]}
-        DP={this.state.data.DisplayPictures[2]}
-      /> */
-
-              null}
+            : null}
         </div>
         <div className="row">
-          {this.state.data
+        {/* <div className="col-md-12" >
+          <h3>showing data from linkedin</h3>
+          </div> */}
+       
+          {this.state.data.myLinks
+            ? this.state.data.myLinks.map((x, i) => {
+                // console.log(x.picture);
+
+                if (x.revelant == "likly") {
+                  return (
+                    <div className="col-md-4 " key={i}>
+                      <TweeterDataShow
+                        name={x.TITLE}
+                        description={x.Description}
+                      />
+                    </div>
+                  );
+                }
+              })
+            : null}
+        </div>
+        <div className="row">
+          
+          {this.state.data.myLinkstwo
+            ? this.state.data.myLinkstwo.map((x, i) => {
+                // console.log(x.picture);
+
+                if (x.revelant == "likly") {
+                  return (
+                    <div className="col-md-4 " key={i}>
+                      <TweeterDataShow
+                        name={x.TITLE}
+                        description={x.Description}
+                      />
+                    </div>
+                  );
+                }
+              })
+            : null}
+        </div>
+        {this.state.data.insta ? (
+          <div>
+            <h3 className=" "> Showing Data From twitter </h3>
+          </div>
+        ) : null}
+        <div className="row">
+          {this.state.data.tweet
             ? this.state.data.tweet.map((x, i) => {
                 //  console.log(x);
                 return (
-                  //   FULLNAME={x.TITLE}
-                  //   BIO={x.Description}
-                  //   DP={""
-                  //   }
-                  //   screenName={x.link}
                   <div className="col-md-4 " key={i}>
-                    <FbDataShow
+                    <TweeterDataShow
                       name={x.Fullname}
                       description={x.Bios}
                       imgg={x.DisplayPictures}
-                      username={x.screenName}
+                      ScreenName={x.screenName}
+                    />
+                  </div>
+                );
+              })
+            : null}
+        </div>
+        {this.state.data.insta ? (
+          <div>
+            <h3 className=" "> Showing Data From Instagram </h3>
+          </div>
+        ) : null}
+        <div className="row">
+          {this.state.data.insta
+            ? this.state.data.insta.map((x, i) => {
+                //  console.log(x);
+                return (
+                  <div className="col-md-4 " key={i}>
+                    <InstagramDataShow
+                      name={x.Fullname}
+                      Followers={x.followers}
+                      imgg={x.imgLink}
+                      Username={x.username}
                     />
                   </div>
                 );
