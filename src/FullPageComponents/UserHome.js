@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import FbDataShow from "./../Components/fbDataShow";
 import TweeterDataShow from "./../Components/twitterDataShow";
 import InstagramDataShow from "./../Components/InstaDataShow";
+import MinimalisticForm from "../Components/MinimalisticForm";
+import LinkedinDataShow from "../Components/Linkedin";
 class UserHome extends Component {
   constructor(props) {
     super(props);
@@ -14,13 +16,33 @@ class UserHome extends Component {
       displayCounter: 0,
       data: "",
       errorMessage: "",
-      loading: false
+      loading: false,
+      InstaButton: false,
+      FacebookButton: false,
+      TwiiterButton: false
     };
   }
+  // changes twitter's see more button
+  ChangeTwitter = () => {
+    this.setState({ TwiiterButton: !this.state.TwiiterButton });
+  };
+  // changes facebook's see more button
+  ChangeFb = () => {
+    this.setState({ FacebookButton: !this.state.FacebookButton });
+  };
+  // changes Instagram's see more button
+  ChangeInsta = () => {
+    this.setState({ InstaButton: !this.state.InstaButton });
+  };
+  // makes the network request
   getPerson = async () => {
     console.log("geting request....");
     const response = await fetch(
-      `/fiind/${this.state.FullName}&${this.state.organisation}`
+      // /fiind/${this.state.FullName}&${this.state.organisation}
+      `https://ali-khan.herokuapp.com/fiind/${this.state.FullName}&${
+        this.state.organisation
+      }`,
+      { mode: "cors" }
     );
     const body = await response.json();
     console.log(body);
@@ -30,6 +52,7 @@ class UserHome extends Component {
   handleChange = event => {
     this.setState({ [event.target.name]: event.target.value });
   };
+  // changes which input form to show and does  the network request..
 
   displayNext = () => {
     let count = this.state.displayCounter;
@@ -46,9 +69,11 @@ class UserHome extends Component {
         });
     }
   };
+
   SearchAgain = () => {
     this.setState({ displayCounter: 0, data: "" });
   };
+  // displays the first 6 facebook results.
   GetFBcollapse = data => {
     let arrayOFData = [];
     for (let i = 0; i < 7; i++) {
@@ -65,16 +90,25 @@ class UserHome extends Component {
         );
       } else if (i == 6) {
         arrayOFData.push(
-          <div className="col-md-4" key={i} style={{ marginTop: "10px" }}>
+          <div
+            className="col-md-8 offset-md-2"
+            key={i}
+            style={{ margin: "15px auto" }}
+          >
             <button
-              className="btn btn-primary"
+              className="btn btn-light btn-large "
               type="button"
               data-toggle="collapse"
               data-target="#collapseExample"
               aria-expanded="false"
               aria-controls="collapseExample"
+              onClick={this.ChangeFb}
+              style={{ color: "#4267b2", padding: "10px" }}
             >
-              View more Results
+            
+              {!this.state.FacebookButton
+                ? "View more Results"
+                : "See less Results"}
             </button>
           </div>
         );
@@ -84,48 +118,151 @@ class UserHome extends Component {
   };
   GetTwittercollapse = data => {
     let arrayOFData = [];
-    for (let i = 0; i < 7; i++) {
-      if (i < 6) {
-        arrayOFData.push(
-          <div className="col-md-4" key={i}>
-            <TweeterDataShow
-              name={data[i].Fullname}
-              description={data[i].Bios}
-              imgg={data[i].DisplayPictures}
-              ScreenName={data[i].screenName}
-            />
-          </div>
-        );
-      } else if (i == 6) {
-        arrayOFData.push(
-          <div className="col-md-4" key={i} style={{ marginTop: "10px" }}>
-            <button
-              className="btn btn-primary"
-              type="button"
-              data-toggle="collapse"
-              data-target="#collapseExampleTwitter"
-              aria-expanded="false"
-              aria-controls="collapseExample"
-            >
-              View more Results
-            </button>
-          </div>
-        );
+    if (data.length < 6) {
+      for (let i = 0; i < data.length; i++) {
+        if (i < 6) {
+          arrayOFData.push(
+            <div className="col-md-4" key={i}>
+              <TweeterDataShow
+                name={data[i].Fullname}
+                description={data[i].Bios}
+                imgg={data[i].DisplayPictures}
+                ScreenName={data[i].screenName}
+              />
+            </div>
+          );
+        }
       }
+    } else {
+      for (let i = 0; i < 7; i++) {
+        if (i < 6) {
+          arrayOFData.push(
+            <div className="col-md-4" key={i}>
+              <TweeterDataShow
+                name={data[i].Fullname}
+                description={data[i].Bios}
+                imgg={data[i].DisplayPictures}
+                ScreenName={data[i].screenName}
+              />
+            </div>
+          );
+        } else if (i == 6) {
+          arrayOFData.push(
+            <div
+              className="col-md-8 offset-md-2"
+              key={i}
+              style={{ marginTop: "10px" }}
+            >
+              <button
+                className="btn btn-primary"
+                type="button"
+                data-toggle="collapse"
+                data-target="#collapseExampleTwitter"
+                aria-expanded="false"
+                aria-controls="collapseExample"
+                onClick={this.ChangeTwitter}
+                style={{ margin: "15px auto" }}
+              >
+                {!this.state.TwiiterButton
+                  ? "View more Results"
+                  : "See less Results"}
+              </button>
+            </div>
+          );
+        }
+      }
+    }
+
+    return arrayOFData;
+  };
+  GetInstagramcollapse = data => {
+    let arrayOFData = [];
+    if (data.length < 6) {
+      for (let i = 0; i < data.length; i++) {
+        if (i < 6) {
+          arrayOFData.push(
+            <div className="col-md-4" key={i}>
+              <InstagramDataShow
+                name={data[i].Fullname}
+                Followers={data[i].followers}
+                imgg={data[i].imgLink}
+                Username={data[i].username}
+              />
+            </div>
+          );
+        }
+      }
+    } else {
+      for (let i = 0; i < 7; i++) {
+        if (i < 6) {
+          arrayOFData.push(
+            <div className="col-md-4" key={i}>
+              <InstagramDataShow
+                name={data[i].Fullname}
+                Followers={data[i].followers}
+                imgg={data[i].imgLink}
+                Username={data[i].username}
+              />
+            </div>
+          );
+        } else if (i == 6) {
+          arrayOFData.push(
+            <div
+              className="col-md-8 offset-md-2 "
+              key={i}
+              style={{ marginTop: "10px" }}
+            >
+              <button
+                className="btn btn-primary"
+                type="button"
+                data-toggle="collapse"
+                data-target="#collapseExampleinstagram"
+                aria-expanded="false"
+                aria-controls="collapseExample"
+                onClick={this.ChangeInsta}
+                style={{ margin: "15px auto" }}
+              >
+                {!this.state.InstaButton
+                  ? "View more Results"
+                  : "See less Results"}
+              </button>
+            </div>
+          );
+        }
+      }
+    }
+
+    return arrayOFData;
+  };
+
+  InstagramCollapseData = data => {
+    let arrayOFData = [];
+    for (let i = 6; i < data.length; i++) {
+      arrayOFData.push(
+        <div className="col-md-4" key={i}>
+          <InstagramDataShow
+            name={data[i].Fullname}
+            Followers={data[i].followers}
+            imgg={data[i].imgLink}
+            Username={data[i].username}
+          />
+        </div>
+      );
     }
     return arrayOFData;
   };
+
   TwitterCollapseData = data => {
     let arrayOFData = [];
     for (let i = 6; i < data.length; i++) {
       arrayOFData.push(
         <div className="col-md-4" key={i}>
           <TweeterDataShow
-              name={data[i].Fullname}
-              description={data[i].Bios}
-              imgg={data[i].DisplayPictures}
-              ScreenName={data[i].screenName}
-            />
+            name={data[i].Fullname}
+            description={data[i].Bios}
+            imgg={data[i].DisplayPictures}
+            ScreenName={data[i].screenName}
+          />
         </div>
       );
     }
@@ -151,85 +288,35 @@ class UserHome extends Component {
     return (
       <div className="container-fluid">
         <br />
-        <br />
-
         {!this.state.loading ? (
           // check of state of loading is true or not
           <div className="row">
             {this.state.data ? null : (
               <div className="col-md-8 offset-md-1">
-                <div className="card text-white bg-dark">
-                  <div className="card-body">
-                    {this.state.displayCounter == 0 ? (
-                      <div>
-                        <p>Lets get started</p>
-                        <h4>Step : 1</h4>
-                        <hr />
-                        <h5>Enter the Name of the person</h5>
-                        <div className="form-group card-text">
-                          <input
-                            type="text"
-                            className="form-control"
-                            id="exampleInputEmail1"
-                            aria-describedby="emailHelp"
-                            placeholder="Please enter the full name of the person that you are looking for ..."
-                            onChange={this.handleChange}
-                            value={this.state.FullName}
-                            name="FullName"
-                            style={{ padding: "10px", fontSize: "20px" }}
-                          />
-                          {/* <small id="emailHelp" className="form-text text-muted">
-                    We'll never share your email with anyone else.
-                  </small> */}
-                        </div>
-                        <h6>Tips*</h6>
-                        <p>
-                          Try to write the name of the person as accuratly as
-                          possible and make sure it doesnt contain typos.
-                        </p>
-                      </div>
-                    ) : null}
-                    {this.state.displayCounter == 1 ? (
-                      <div>
-                        <h4>Step : 2</h4>
-                        <hr />
-                        <h5>
-                          Enter the Name of the Company or Education institution
-                          which that person belongs.
-                        </h5>
-                        <div className="form-group card-text">
-                          <input
-                            type="text"
-                            className="form-control"
-                            id="exampleInputEmail1"
-                            aria-describedby="emailHelp"
-                            placeholder="Please enter the name of the organization that person belongs to  ..."
-                            onChange={this.handleChange}
-                            value={this.state.organisation}
-                            name="organisation"
-                            style={{ padding: "10px", fontSize: "20px" }}
-                          />
-                          {/* <small id="emailHelp" className="form-text text-muted">
-                    We'll never share your email with anyone else.
-                  </small> */}
-                        </div>
-                        <h6>Tips*</h6>
-                        <p>
-                          try to correctly spell the name of the institution, it
-                          plays an important part
-                        </p>
-                      </div>
-                    ) : null}
-                    {this.state.loading || this.state.data ? null : (
-                      <button
-                        className="btn btn-primary btn-lg"
-                        onClick={this.displayNext}
-                      >
-                        Next
-                      </button>
-                    )}
-                  </div>
-                </div>
+                {/* <div className="card text-white bg-dark"> */}
+                {/* <div className="card-body"> */}
+                {this.state.displayCounter == 0 ? (
+                  <MinimalisticForm
+                    changeState={this.handleChange}
+                    stateName={this.state.FullName}
+                    Question={"Enter The Name of the Person"}
+                    PlaceholderText={"Please enter the full name"}
+                    ChangeForm={this.displayNext}
+                    Name={"FullName"}
+                  />
+                ) : null}
+                {this.state.displayCounter == 1 ? (
+                  <MinimalisticForm
+                    changeState={this.handleChange}
+                    stateName={this.state.organisation}
+                    Question={
+                      "Enter The Name of the Company or Education institute from where the person belongs"
+                    }
+                    PlaceholderText={"Please enter the company/institute name"}
+                    ChangeForm={this.displayNext}
+                    Name={"organisation"}
+                  />
+                ) : null}
               </div>
             )}
             {/* first row ends */}
@@ -264,27 +351,46 @@ class UserHome extends Component {
               </button>
             </div>
           ) : null}
+
           {this.state.data ? (
             <div className="text-center col-md-12">
-              <h3 className="text-center"> your results </h3>
+              <h2 style={{ padding: "10px", textAlign: "left" }}>
+                {" "}
+                <i className="fas fa-users" /> Your Results{" "}
+                <span style={{ borderRight: "5px solid red" }} />
+              </h2>
               <hr />
-              <div className="row">
-                <h4 className="col-md-12">showing data from fb</h4>
+              {/* fb section */}
+
+              <div className="row" style={{ backgroundColor: "#4267b2" }}>
+                <h3 className="col-md-12 text-white">
+                  Showing Data From <i className="fab fa-facebook" /> FB
+                </h3>
                 {this.state.data.fb
                   ? this.GetFBcollapse(this.state.data.fb)
                   : null}
               </div>
               {this.state.data.fb ? (
-                <div className=" collapse" id="collapseExample">
-                  <div className="row">
+                <div
+                  className=" collapse"
+                  id="collapseExample"
+                  style={{ backgroundColor: "#4267b2" }}
+                >
+                  <div className="row" style={{ backgroundColor: "#4267b2" }}>
                     {this.fbCollapseData(this.state.data.fb)}
+                    <br />
                   </div>
                 </div>
               ) : null}
+              <br />
 
+              {/* twitter section */}
               {this.state.data.tweet ? (
                 <div>
-                  <h4>showing data from twitter</h4>
+                  <h3 className="bg-info text-white">
+                    Showing Data From Twitter{" "}
+                    <i className="fab fa-twitter-square" />
+                  </h3>
                   <div className="row">
                     {this.GetTwittercollapse(this.state.data.tweet)}
                   </div>
@@ -295,6 +401,57 @@ class UserHome extends Component {
                   </div>
                 </div>
               ) : null}
+              {/* instagram section */}
+              {this.state.data.insta ? (
+                <div>
+                  <h4>showing data from instagram</h4>
+                  <div className="row">
+                    {this.GetInstagramcollapse(this.state.data.insta)}
+                  </div>
+                  <div className=" collapse" id="collapseExampleinstagram">
+                    <div className="row">
+                      {this.InstagramCollapseData(this.state.data.insta)}
+                    </div>
+                  </div>
+                </div>
+              ) : null}
+              <div className="row">
+                {this.state.data.myLinkstwo
+                  ? this.state.data.myLinkstwo.map((x, i) => {
+                      // console.log(x.picture);
+
+                      if (x.revelant == "likly") {
+                        return (
+                          <div className="col-md-4 " key={i}>
+                            <LinkedinDataShow
+                              Name={x.TITLE}
+                              Details={x.Description}
+                              ProfileLink={x.link}
+                            />
+                          </div>
+                        );
+                      }
+                    })
+                  : null}
+                {this.state.data.myLinks
+                  ? this.state.data.myLinks.map((x, i) => {
+                      // console.log(x.picture);
+
+                      if (x.revelant == "likly") {
+                        return (
+                          <div className="col-md-4 " key={i}>
+                            <LinkedinDataShow
+                              Name={x.TITLE}
+                              Details={x.Description}
+                              ProfileLink={x.link}
+                            />
+                          </div>
+                        );
+                      }
+                    })
+                  : null}
+              </div>
+              <br />
             </div>
           ) : null}
         </div>

@@ -1,10 +1,10 @@
-import React, { Component } from "react";
+import React from "react";
 
 const twitterDataShow = props => {
   return (
     <div
       className="card text-white bg-info "
-      style={{ marginTop: "10px", height: "260px" }}
+      style={{ marginTop: "10px", height: "180px" }}
     >
       <div className="card-body">
         <div className="row">

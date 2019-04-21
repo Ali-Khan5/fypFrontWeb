@@ -21,7 +21,7 @@ class Routers extends Component {
     render() {
         return (
             <Router history={history}>
-            <div>
+            <div >
                 <Navbar/>
                 <Route exact path="/" component={Home} />
                 <Route exact path="/" component={About}/>

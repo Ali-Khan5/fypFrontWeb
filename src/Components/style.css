@@ -20,6 +20,22 @@
   .faqQuestionsStyle:hover{
     font-size: 1.45rem; 
   }
+  /* this changes my form margin layout */
+  .minimalisticForm{
+    margin-top: 10%;
+    margin-left: 5%;
+  }
+  .LinkedinStyle{
+    background-color: #fefefe;
+    
+  }
+
+ /* this changes my bootstrap form focus styling !!! */
+  .form-control:focus {
+    border-color: #6265e4 !important;
+    box-shadow: none!important;
+    outline: 0 none;
+  }
   @media (max-width: 755px) {
 
     .typeWritingClass{

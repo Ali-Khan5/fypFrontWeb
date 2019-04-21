@@ -2,7 +2,7 @@ import React, { Component } from "react";
 
 const fbDataShow = props => {
   return (
-    <div className="card border-primary " style={{ marginTop: "10px",height:'150px' }}>
+    <div className="card border-primary text-left " style={{ marginTop: "10px",height:'150px' }}>
       <div className="card-body">
         <div className="row">
           <div className=" col-md-4">

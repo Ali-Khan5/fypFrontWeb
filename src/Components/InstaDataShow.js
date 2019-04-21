@@ -2,7 +2,7 @@ import React, { Component } from "react";
 
 const InstaDataShow = props => {
   return (
-    <div className="card text-white bg-dark  " style={{ marginTop: "10px",height:'200px' }}>
+    <div className="card text-white bg-dark  " style={{ marginTop: "10px",height:'180px' }}>
       <div className="card-body">
         <div className="row">
           <div className=" col-md-4">
