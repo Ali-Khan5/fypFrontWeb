@@ -9,8 +9,8 @@ class Header extends Component {
     return (
         // <!--Main Navigation-->
         <nav className="navbar navbar-expand-lg ">
-        <a className="navbar-brand" href="#"> <img  height={140} width={140} src={Logo}/></a>
-        <button className="navbar-toggler ml-auto" type="button" data-toggle="collapse" data-target="#collapsingNavbar3">
+        <a className="navbar-brand specialLogo" href="#"> <img  height={100} width={140} src={"https://res.cloudinary.com/dcw1i97ph/image/upload/v1555968889/Social_Finder_ut7fe4.png"}/></a>
+        <button className="navbar-toggler ml-auto togglesIconColor" type="button" data-toggle="collapse" data-target="#navbarNavDropdown">
         <span className="navbar-toggler-icon"></span>
          </button>
         <div className="collapse navbar-collapse" id="navbarNavDropdown">
