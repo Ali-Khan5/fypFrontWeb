@@ -3,13 +3,13 @@ import React from "react";
 const twitterDataShow = props => {
   return (
     <div
-      className="card text-white bg-info "
-      style={{ marginTop: "10px", height: "180px" }}
+      className="card text-white bg-info responsiveCard"
+      style={{ marginTop: "10px" }}
     >
       <div className="card-body">
         <div className="row">
           {props.imgg ?  (
-            <div className="col-md-4">
+            <div className="col-md-4 col-4">
               {props.imgg == "" ? (
                 <img
                   className="card-img-top"
@@ -38,7 +38,7 @@ const twitterDataShow = props => {
               ) : null}
             </div>
           ) : null}
-          <div className=" col-md-8">
+          <div className=" col-md-8 col-8">
             <h5 className="card-title">{props.name}</h5>
             <p style={{ fontSize: "14px", fontWeight: "bold" }}>
               {props.ScreenName ? props.ScreenName : null}

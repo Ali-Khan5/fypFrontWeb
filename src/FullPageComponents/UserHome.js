@@ -41,8 +41,8 @@ class UserHome extends Component {
       // /fiind/${this.state.FullName}&${this.state.organisation}
       `https://ali-khan.herokuapp.com/fiind/${this.state.FullName}&${
         this.state.organisation
-      }`,
-      { mode: "cors" }
+      }`
+      
     );
     const body = await response.json();
     console.log(body);
@@ -402,9 +402,10 @@ class UserHome extends Component {
                 </div>
               ) : null}
               {/* instagram section */}
+              <br/>
               {this.state.data.insta ? (
                 <div>
-                  <h4>showing data from instagram</h4>
+                  <h3>Showing Data From Instagram <i className="fab fa-instagram"></i></h3>
                   <div className="row">
                     {this.GetInstagramcollapse(this.state.data.insta)}
                   </div>
@@ -415,7 +416,13 @@ class UserHome extends Component {
                   </div>
                 </div>
               ) : null}
+              <br/>
               <div className="row">
+              {this.state.data.myLinks ? 
+                    <h3 className="col-md-12">
+                    Showing Data From Linkedin <i className="fab fa-linkedin"></i>
+                    </h3>
+                    :null}
                 {this.state.data.myLinkstwo
                   ? this.state.data.myLinkstwo.map((x, i) => {
                       // console.log(x.picture);
@@ -433,6 +440,7 @@ class UserHome extends Component {
                       }
                     })
                   : null}
+                  
                 {this.state.data.myLinks
                   ? this.state.data.myLinks.map((x, i) => {
                       // console.log(x.picture);

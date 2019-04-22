@@ -5,7 +5,7 @@ const Minimalistic = props => {
     <div className="container-fluid minimalisticForm">
       <div className="row">
         <div className="col-md-8 col-12">
-          <h3> {props.Question} </h3>
+          <h4> {props.Question} </h4>
 
           <input
             type="text"
@@ -43,6 +43,7 @@ const Minimalistic = props => {
               Next{" "}
             </button>
           ) : null}
+          <br/>
 
         </div>
       </div>

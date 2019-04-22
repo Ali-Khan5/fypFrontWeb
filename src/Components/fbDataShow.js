@@ -2,10 +2,10 @@ import React, { Component } from "react";
 
 const fbDataShow = props => {
   return (
-    <div className="card border-primary text-left " style={{ marginTop: "10px",height:'150px' }}>
+    <div className="card border-primary text-left responsiveCard" style={{ marginTop: "10px" }}>
       <div className="card-body">
         <div className="row">
-          <div className=" col-md-4">
+          <div className=" col-md-4 col-4">
             {props.imgg === "" ? (
               <img
                 className="card-img-top"
@@ -33,11 +33,15 @@ const fbDataShow = props => {
               />
             ) : null}
           </div>
-          <div className=" col-md-8">
+          <div className=" col-md-8 col-8">
             <h5 className="card-title">{props.name}</h5>
-            <p style={{ fontSize: "12px" }}>
-            {props.username ? props.username :null}
-            </p>
+            <a href={props.username ? props.username :"#"} target="_blank" >
+            <button className="btn btn-primary"style={{ fontSize: "12px" }}>
+            Profile Link
+            </button>
+            </a>
+           
+           
             <p style={{ fontSize: "12px" }}>
 
               {props.description.split("").length > 50

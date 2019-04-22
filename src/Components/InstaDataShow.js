@@ -2,10 +2,10 @@ import React, { Component } from "react";
 
 const InstaDataShow = props => {
   return (
-    <div className="card text-white bg-dark  " style={{ marginTop: "10px",height:'180px' }}>
+    <div className="card text-white bg-dark responsiveCard " style={{ marginTop: "10px" }}>
       <div className="card-body">
         <div className="row">
-          <div className=" col-md-4">
+          <div className=" col-md-4 col-4">
             {props.imgg === "" ? (
               <img
                 className="card-img-top"
@@ -33,7 +33,7 @@ const InstaDataShow = props => {
               />
             ) : null}
           </div>
-          <div className=" col-md-8">
+          <div className=" col-md-8 col-8">
             <h5 className="card-title">{props.name}</h5>
             <p style={{ fontSize: "14px",fontWeight:'bold' }}>
             {props.Username ? props.Username :null}
