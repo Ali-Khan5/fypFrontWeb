@@ -61,8 +61,11 @@ $shadow-color: #c7c7c7; */
   color: white;
   text-align: center;
   margin-top: 10px;
-  margin-left: 70px;
-  margin-right: 70px;
+  margin-left: 80px;
+  margin-right: 80px;
+}
+.havouring:hover{
+  cursor: pointer;
 }
 .bgImg{
   

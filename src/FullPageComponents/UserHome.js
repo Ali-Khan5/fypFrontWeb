@@ -39,14 +39,16 @@ class UserHome extends Component {
     console.log("geting request....");
     const response = await fetch(
       // /fiind/${this.state.FullName}&${this.state.organisation}
-      `https://ali-khan.herokuapp.com/fiind/${this.state.FullName}&${
+      `https://ali-khan.herokuapp.com/find/${this.state.FullName}&${
         this.state.organisation
       }`
-      
     );
     const body = await response.json();
     console.log(body);
-    if (response.status !== 200) throw Error(body.message);
+    if (response.status !== 200) {
+      // this.setState({errorMessage:body.message});
+      throw Error(body.message);
+    }
     return body;
   };
   handleChange = event => {
@@ -65,13 +67,13 @@ class UserHome extends Component {
         .then(res => this.setState({ data: res, loading: false }))
         .catch(err => {
           // console.log(err);
-          this.setState({ errorMessage: err });
+          this.setState({ errorMessage: err, loading: false });
         });
     }
   };
 
   SearchAgain = () => {
-    this.setState({ displayCounter: 0, data: "" });
+    this.setState({ displayCounter: 0, data: "" ,errorMessage:""});
   };
   // displays the first 6 facebook results.
   GetFBcollapse = data => {
@@ -105,7 +107,6 @@ class UserHome extends Component {
               onClick={this.ChangeFb}
               style={{ color: "#4267b2", padding: "10px" }}
             >
-            
               {!this.state.FacebookButton
                 ? "View more Results"
                 : "See less Results"}
@@ -333,7 +334,40 @@ class UserHome extends Component {
 
           // logic for loading screen goes here....
         )}
-
+        {this.state.errorMessage ? (
+          <div className="row">
+            <div className="col-md-6 offset-md-3">
+              <div className="alert alert-danger" role="alert">
+                <h4 className="alert-heading">
+                  Opps Something Bad Happened :( !
+                </h4>
+                <p>
+                  Do check that you have a working Internet , sometimes results
+                  might not appear because of bad internet{" "}
+                </p>
+                <hr />
+                <p className="mb-0">
+                  Maybe trying refreshing the page or try using it later.
+                </p>
+              </div>
+            </div>
+            <br />
+            <div className="col-md-6 offset-md-3">
+              <div className="card border-info " style={{ maxWidth: "25rem" }}>
+                <div className="card-body text-info">
+                  <h3> want to search again ? </h3>
+                </div>
+              </div>
+              <button
+                className="btn btn-warning btn-lg"
+                onClick={this.SearchAgain}
+                style={{ marginTop: "10px" }}
+              >
+                Search Again!
+              </button>
+            </div>
+          </div>
+        ) : null}
         <div className="row">
           {this.state.data ? (
             <div className="col-md-6 offset-md-3">
@@ -402,10 +436,13 @@ class UserHome extends Component {
                 </div>
               ) : null}
               {/* instagram section */}
-              <br/>
+              <br />
               {this.state.data.insta ? (
                 <div>
-                  <h3>Showing Data From Instagram <i className="fab fa-instagram"></i></h3>
+                  <h3>
+                    Showing Data From Instagram{" "}
+                    <i className="fab fa-instagram" />
+                  </h3>
                   <div className="row">
                     {this.GetInstagramcollapse(this.state.data.insta)}
                   </div>
@@ -416,13 +453,13 @@ class UserHome extends Component {
                   </div>
                 </div>
               ) : null}
-              <br/>
+              <br />
               <div className="row">
-              {this.state.data.myLinks ? 
-                    <h3 className="col-md-12">
-                    Showing Data From Linkedin <i className="fab fa-linkedin"></i>
-                    </h3>
-                    :null}
+                {this.state.data.myLinks ? (
+                  <h3 className="col-md-12">
+                    Showing Data From Linkedin <i className="fab fa-linkedin" />
+                  </h3>
+                ) : null}
                 {this.state.data.myLinkstwo
                   ? this.state.data.myLinkstwo.map((x, i) => {
                       // console.log(x.picture);
@@ -440,7 +477,7 @@ class UserHome extends Component {
                       }
                     })
                   : null}
-                  
+
                 {this.state.data.myLinks
                   ? this.state.data.myLinks.map((x, i) => {
                       // console.log(x.picture);

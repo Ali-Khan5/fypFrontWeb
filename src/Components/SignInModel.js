@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import History from "./../History";
+import { Link } from "react-router-dom";
 const SignInModel = props => {
   return (
     // <!-- Modal -->
@@ -45,16 +46,16 @@ const SignInModel = props => {
             >
               Close
             </button>
+    
             <button
               type="button"
               className="btn btn-primary"
               data-dismiss="modal"
-              onClick={() => {
-                History.push("/homepage");
-              }}
+           onClick={props.SignIn}
             >
               Sign In
             </button>
+          
           </div>
         </div>
       </div>

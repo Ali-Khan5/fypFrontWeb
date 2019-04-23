@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+
 import Question from "./../Components/FaqQuestion";
 import Answer from "./../Components/FaqAnswer";
 class Faq extends Component {
@@ -10,7 +11,11 @@ class Faq extends Component {
           {/* row start */}
           <div className="row">
             {/* first collum start */}
-            <div className="col-md-6" style={{ marginTop: "10px" }}>
+            <div
+              className="col-md-6"
+              style={{ marginTop: "10px" }}
+              name="section2"
+            >
               <Question
                 Eid={"#q1"}
                 text={
@@ -63,13 +68,18 @@ class Faq extends Component {
             {/* fourth column */}
             <div className="col-md-6 " style={{ marginTop: "10px" }}>
               <Question Eid={"#q5"} text={"is it secure?"} />
-              <Answer Eid={"q5"} answer={" Absolutley, We are only showing you the public data of that person "} />
+              <Answer
+                Eid={"q5"}
+                answer={
+                  " Absolutley, We are only showing you the public data of that person "
+                }
+              />
             </div>
           </div>
           {/* fourth colum end */}
-          <br/>
-          <br/>
-          <br/>
+          <br />
+          <br />
+          <br />
         </div>
       </div>
     );

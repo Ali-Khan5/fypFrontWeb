@@ -2,9 +2,13 @@
 import React, { Component } from 'react';
 import './style.css';
 import Logo from './../socialfinderapp.png'
+import History from "./../History";
 import { Link } from "react-router-dom";
 import SignInModel from "./../Components/SignInModel";
 class Header extends Component {
+  signin=()=>{
+    History.push("/user");
+  }
   render() {
     return (
         // <!--Main Navigation-->
@@ -36,7 +40,7 @@ class Header extends Component {
               </div>
             </li> */}
           </ul>
-          <SignInModel/>
+          <SignInModel SignIn={this.signin}/>
         </div>
       </nav>
     );
