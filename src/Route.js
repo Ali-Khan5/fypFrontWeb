@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 // import { Route, Router } from 'react-router-dom';
-import { Route, HashRouter as Router, Switch } from "react-router-dom";
+import { Route, Router, Switch } from "react-router-dom";
 import Home from "./FullPageComponents/Home";
 // import createBrowserHistory from "history/createBrowserHistory";
 import Navbar from "./Layout/header";
