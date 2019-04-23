@@ -55,7 +55,33 @@ class UserHome extends Component {
     this.setState({ [event.target.name]: event.target.value });
   };
   // changes which input form to show and does  the network request..
+  displayLinkedinRevelantData = (dataObj1, dataObj2) => {
+    let count = 0;
+    dataObj1.map((x, i) => {
+      // console.log(x.picture);
 
+      if (x.revelant == "likly") {
+        count++;
+      }
+    });
+    dataObj2.map((x, i) => {
+      // console.log(x.picture);
+
+      if (x.revelant == "likly") {
+        count++;
+      }
+    });
+    if (count>0){
+     let arrayOfHeading=[];
+     arrayOfHeading.push(
+      <h3 className="col-md-12">
+      Showing Data From Linkedin <i className="fab fa-linkedin" />
+    </h3>
+     ) 
+     return arrayOfHeading;
+    }
+   
+  };
   displayNext = () => {
     let count = this.state.displayCounter;
     count++;
@@ -73,13 +99,13 @@ class UserHome extends Component {
   };
 
   SearchAgain = () => {
-    this.setState({ displayCounter: 0, data: "" ,errorMessage:""});
+    this.setState({ displayCounter: 0, data: "", errorMessage: "" });
   };
   // displays the first 6 facebook results.
   GetFBcollapse = data => {
     let arrayOFData = [];
-    for (let i = 0; i < 7; i++) {
-      if (i < 6) {
+    if (data.length < 6) {
+      for (let i = 0; i < data.length; i++) {
         arrayOFData.push(
           <div className="col-md-4" key={i}>
             <FbDataShow
@@ -90,29 +116,44 @@ class UserHome extends Component {
             />
           </div>
         );
-      } else if (i == 6) {
-        arrayOFData.push(
-          <div
-            className="col-md-8 offset-md-2"
-            key={i}
-            style={{ margin: "15px auto" }}
-          >
-            <button
-              className="btn btn-light btn-large "
-              type="button"
-              data-toggle="collapse"
-              data-target="#collapseExample"
-              aria-expanded="false"
-              aria-controls="collapseExample"
-              onClick={this.ChangeFb}
-              style={{ color: "#4267b2", padding: "10px" }}
+      }
+    } else {
+      for (let i = 0; i < 7; i++) {
+        if (i < 6) {
+          arrayOFData.push(
+            <div className="col-md-4" key={i}>
+              <FbDataShow
+                name={data[i].TITLE}
+                description={data[i].details}
+                imgg={data[i].picture}
+                username={data[i].link}
+              />
+            </div>
+          );
+        } else if (i == 6) {
+          arrayOFData.push(
+            <div
+              className="col-md-8 offset-md-2"
+              key={i}
+              style={{ margin: "15px auto" }}
             >
-              {!this.state.FacebookButton
-                ? "View more Results"
-                : "See less Results"}
-            </button>
-          </div>
-        );
+              <button
+                className="btn btn-light btn-large "
+                type="button"
+                data-toggle="collapse"
+                data-target="#collapseExample"
+                aria-expanded="false"
+                aria-controls="collapseExample"
+                onClick={this.ChangeFb}
+                style={{ color: "#4267b2", padding: "10px" }}
+              >
+                {!this.state.FacebookButton
+                  ? "View more Results"
+                  : "See less Results"}
+              </button>
+            </div>
+          );
+        }
       }
     }
     return arrayOFData;
@@ -397,14 +438,16 @@ class UserHome extends Component {
               {/* fb section */}
 
               <div className="row" style={{ backgroundColor: "#4267b2" }}>
-                <h3 className="col-md-12 text-white">
-                  Showing Data From <i className="fab fa-facebook" /> FB
-                </h3>
-                {this.state.data.fb
+                {this.state.data.fb && this.state.data.fb.length > 1 ? (
+                  <h3 className="col-md-12 text-white">
+                    Showing Data From <i className="fab fa-facebook" /> FB
+                  </h3>
+                ) : null}
+                {this.state.data.fb && this.state.data.fb.length > 1
                   ? this.GetFBcollapse(this.state.data.fb)
                   : null}
               </div>
-              {this.state.data.fb ? (
+              {this.state.data.fb && this.state.data.fb.length > 1 ? (
                 <div
                   className=" collapse"
                   id="collapseExample"
@@ -419,7 +462,7 @@ class UserHome extends Component {
               <br />
 
               {/* twitter section */}
-              {this.state.data.tweet ? (
+              {this.state.data.tweet && this.state.data.tweet.length > 1 ? (
                 <div>
                   <h3 className="bg-info text-white">
                     Showing Data From Twitter{" "}
@@ -437,7 +480,7 @@ class UserHome extends Component {
               ) : null}
               {/* instagram section */}
               <br />
-              {this.state.data.insta ? (
+              {this.state.data.insta && this.state.data.insta.length > 1 ? (
                 <div>
                   <h3>
                     Showing Data From Instagram{" "}
@@ -456,9 +499,10 @@ class UserHome extends Component {
               <br />
               <div className="row">
                 {this.state.data.myLinks ? (
-                  <h3 className="col-md-12">
-                    Showing Data From Linkedin <i className="fab fa-linkedin" />
-                  </h3>
+                  // <h3 className="col-md-12">
+                  //   Showing Data From Linkedin <i className="fab fa-linkedin" />
+                  // </h3>
+                  this.displayLinkedinRevelantData(this.state.data.myLinks,this.state.data.myLinkstwo)
                 ) : null}
                 {this.state.data.myLinkstwo
                   ? this.state.data.myLinkstwo.map((x, i) => {
