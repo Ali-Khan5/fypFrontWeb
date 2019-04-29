@@ -29,16 +29,7 @@ class Header extends Component {
             <li className="nav-item">
               <Link className="nav-link"  to="#" data-toggle="modal" data-target="#exampleModalCenter" >Get Started </Link>
             </li>
-            {/* <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Dropdown link
-              </a>
-              <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                <a class="dropdown-item" href="#">Action</a>
-                <a class="dropdown-item" href="#">Another action</a>
-                <a class="dropdown-item" href="#">Something else here</a>
-              </div>
-            </li> */}
+         
           </ul>
           <SignInModel SignIn={this.signin}/>
         </div>

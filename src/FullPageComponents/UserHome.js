@@ -4,6 +4,7 @@ import TweeterDataShow from "./../Components/twitterDataShow";
 import InstagramDataShow from "./../Components/InstaDataShow";
 import MinimalisticForm from "../Components/MinimalisticForm";
 import LinkedinDataShow from "../Components/Linkedin";
+import SocialBoxes from "../Components/SocialBoxes";
 class UserHome extends Component {
   constructor(props) {
     super(props);
@@ -19,12 +20,33 @@ class UserHome extends Component {
       loading: false,
       InstaButton: false,
       FacebookButton: false,
-      TwiiterButton: false
+      TwiiterButton: false,
+      CheckBoxResult: false,
+      CheckboxFacebook: "",
+      CheckboxTwitter: "",
+      Checkboxlinkedin: "",
+      CheckboxInstagram: ""
     };
   }
+  CheckBoxFb = () => {
+    this.setState({ CheckboxFacebook: !this.state.CheckboxFacebook });
+    // console.log('s:',this.state.CheckboxFacebook )
+  };
+  CheckBoxTw = () => {
+    this.setState({ CheckboxTwitter: !this.state.CheckboxTwitter });
+  };
+  CheckBoxLink = () => {
+    this.setState({ Checkboxlinkedin: !this.state.Checkboxlinkedin });
+  };
+  CheckBoxinsta = () => {
+    this.setState({ CheckboxInstagram: !this.state.CheckboxInstagram });
+  };
   // changes twitter's see more button
   ChangeTwitter = () => {
     this.setState({ TwiiterButton: !this.state.TwiiterButton });
+  };
+  ChangeCheckBox = () => {
+    this.displayNext();
   };
   // changes facebook's see more button
   ChangeFb = () => {
@@ -37,11 +59,16 @@ class UserHome extends Component {
   // makes the network request
   getPerson = async () => {
     console.log("geting request....");
+    console.log(this.state.CheckboxInstagram);
     const response = await fetch(
       // /fiind/${this.state.FullName}&${this.state.organisation}
-      `https://ali-khan.herokuapp.com/find/${this.state.FullName}&${
+      `https://ali-khan.herokuapp.com/finding/${this.state.FullName}&${
         this.state.organisation
-      }`
+      }/${
+        this.state.CheckboxFacebook ? this.state.CheckboxFacebook : "false"
+      }&${this.state.CheckboxTwitter ? this.state.CheckboxTwitter : "false"}&${
+        this.state.CheckboxInstagram ? this.state.CheckboxInstagram : "false"
+      }&${this.state.Checkboxlinkedin ? this.state.Checkboxlinkedin : "false"}`
     );
     const body = await response.json();
     console.log(body);
@@ -71,24 +98,23 @@ class UserHome extends Component {
         count++;
       }
     });
-    if (count>0){
-     let arrayOfHeading=[];
-     arrayOfHeading.push(
-      <h3 className="col-md-12">
-      Showing Data From Linkedin <i className="fab fa-linkedin" />
-    </h3>
-     ) 
-     return arrayOfHeading;
+    if (count > 0) {
+      let arrayOfHeading = [];
+      arrayOfHeading.push(
+        <h3 className="col-md-12">
+          Showing Data From Linkedin <i className="fab fa-linkedin" />
+        </h3>
+      );
+      return arrayOfHeading;
     }
-   
   };
   displayNext = () => {
     let count = this.state.displayCounter;
     count++;
     this.setState({ displayCounter: count });
-    if (count === 2) {
+    if (count === 3) {
       this.setState({ loading: true });
-      console.log("am i running??");
+
       this.getPerson()
         .then(res => this.setState({ data: res, loading: false }))
         .catch(err => {
@@ -99,7 +125,15 @@ class UserHome extends Component {
   };
 
   SearchAgain = () => {
-    this.setState({ displayCounter: 0, data: "", errorMessage: "" });
+    this.setState({
+      displayCounter: 0,
+      data: "",
+      errorMessage: "",
+      CheckboxTwitter: "",
+      CheckboxInstagram: "",
+      CheckboxFacebook: "",
+      Checkboxlinkedin: ""
+    });
   };
   // displays the first 6 facebook results.
   GetFBcollapse = data => {
@@ -359,6 +393,19 @@ class UserHome extends Component {
                     Name={"organisation"}
                   />
                 ) : null}
+                {this.state.displayCounter == 2 ? (
+                  <SocialBoxes
+                    ChangeCheck={this.ChangeCheckBox}
+                    CheckBoxinsta={this.CheckBoxinsta}
+                    checkinsta={this.state.CheckboxInstagram}
+                    CheckBoxTw={this.CheckBoxTw}
+                    checktweeter={this.state.CheckboxTwitter}
+                    CheckBoxLink={this.CheckBoxLink}
+                    CheckBoxlinkstate={this.state.Checkboxlinkedin}
+                    CheckBoxFb={this.CheckBoxFb}
+                    checkfb={this.state.CheckboxFacebook}
+                  />
+                ) : null}
               </div>
             )}
             {/* first row ends */}
@@ -498,12 +545,15 @@ class UserHome extends Component {
               ) : null}
               <br />
               <div className="row">
-                {this.state.data.myLinks ? (
-                  // <h3 className="col-md-12">
-                  //   Showing Data From Linkedin <i className="fab fa-linkedin" />
-                  // </h3>
-                  this.displayLinkedinRevelantData(this.state.data.myLinks,this.state.data.myLinkstwo)
-                ) : null}
+                {this.state.data.myLinks
+                  ? // <h3 className="col-md-12">
+                    //   Showing Data From Linkedin <i className="fab fa-linkedin" />
+                    // </h3>
+                    this.displayLinkedinRevelantData(
+                      this.state.data.myLinks,
+                      this.state.data.myLinkstwo
+                    )
+                  : null}
                 {this.state.data.myLinkstwo
                   ? this.state.data.myLinkstwo.map((x, i) => {
                       // console.log(x.picture);

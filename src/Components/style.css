@@ -23,7 +23,7 @@
   /* this changes my form margin layout */
   .minimalisticForm{
     margin-top: 10%;
-    margin-left: 5%;
+    margin-left: 4%;
   }
   .LinkedinStyle{
     background-color: #fefefe;
@@ -34,6 +34,13 @@
   }
   .InputTextFormSize{
     font-size: 35px;
+  }
+  .checkBoxStyle{
+    padding:20px;
+  }
+  .iconClass{
+    font-size: 30px;
+  
   }
  /* this changes my bootstrap form focus styling !!! */
   .form-control:focus {
