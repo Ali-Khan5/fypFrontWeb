@@ -1,7 +1,11 @@
 import React, { Component } from "react";
 import History from "./../History";
+
 import { Link } from "react-router-dom";
+
+
 const SignInModel = props => {
+  
   return (
     // <!-- Modal -->
     <div
@@ -37,6 +41,7 @@ const SignInModel = props => {
                 placeholder="Your email Adress"
               />
             </div>
+            <button className="btn btn-info" onClick={props.Google}>Google</button>
           </div>
           <div className="modal-footer">
             <button

@@ -13,7 +13,7 @@ class Insturction extends Component {
 
   instance = () => {
     new TypeIt("#example2", {
-      strings: ["Maheen Ciddikui"],
+      strings: ["Maheen Siddiqui"],
       speed: 150,
       breakLines: false,
       autoStart: true
