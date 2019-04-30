@@ -5,7 +5,8 @@ import History from "./../History";
 import { Link } from "react-router-dom";
 import SignInModel from "./../Components/SignInModel";
 
-import firebase from "firebase";
+import firebase from "firebase/app";
+import "firebase/auth";
 
 var config = {
   apiKey: "AIzaSyDbGI-WGA3rhDY__xVEdOkvlAVOeTk2caI",
