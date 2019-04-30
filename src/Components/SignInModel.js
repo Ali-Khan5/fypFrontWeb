@@ -56,7 +56,9 @@ const SignInModel = props => {
               type="button"
               className="btn btn-primary"
               data-dismiss="modal"
-           onClick={props.SignIn}
+           onClick={()=>{
+            History.push("/user");
+           }}
             >
               Sign In
             </button>

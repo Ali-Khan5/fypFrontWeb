@@ -120,11 +120,9 @@ class Header extends Component {
             {this.state.islogin ? null : (
               <li
                 className="nav-item"
-                onClick={() => {
-                  this.GoogleSignin();
-                }}
+               
               >
-                <Link className="nav-link" to="#">
+                <Link className="nav-link" to="#"  data-toggle="modal" data-target="#exampleModalCenter">
                   Get Started{" "}
                 </Link>
               </li>
@@ -144,6 +142,7 @@ class Header extends Component {
               </li>
             ) : null}
           </ul>
+          <SignInModel/>
         </div>
       </nav>
     );
